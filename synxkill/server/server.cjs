@@ -8,7 +8,7 @@ const port = 5000;
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb+srv://akshatjain:Skillfulbot123@project.5g7m92f.mongodb.net/?retryWrites=true&w=majority');
+mongoose.connect('mongodb+srv://sherabhai:shera1928@cluster0.i5iytse.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
 
 const connection = mongoose.connection;
 connection.once('open', () => {
@@ -21,7 +21,7 @@ app.listen(port, () => {
 
 const userSchema = new mongoose.Schema({
   Title: { type: String, required: true },
-  Description: { type: String, required: true },
+  // Description: { type: String, required: true },
   // VideoURL: { type: String, required: true },
   ImageLinks: { type: String, required: true },
   Duration: { type: String, required: true },
@@ -43,19 +43,17 @@ app.get('/api/users', async (req, res) => {
 });
 
 app.post('/api/users', async (req, res) => {
-  // const { Title, Description, VideoURL, ImageLinks, Duration, Price, Name } = req.body;
-  
-  // const newUser = new User({ Title, Description, VideoURL, ImageLinks, Duration, Price, Name });
+  const { Title, ImageLinks, Duration, Price, Name } = req.body;
 
-  const { Title, Description, ImageLinks, Duration, Price, Name } = req.body;
-
-  const newUser = new User({ Title, Description, ImageLinks, Duration, Price, Name });
+  const newUser = new User({ Title, ImageLinks, Duration, Price, Name });
 
   try {
     await newUser.save();
+    alert(`Course Added Successfully!`);
     res.status(201).json({ message: 'Course Added Successfully' });
     
   } catch (error) {
+    alert(`Error Adding Course!`);
     res.status(500).json({ error: 'Error Adding Course' });
   }
 });
